@@ -15,6 +15,7 @@
       background-color: #e0f7fa;
       color: #03396c;
       text-align: center;
+      padding: 20px;
     }
     #qrcode {
       margin: 20px;
@@ -38,6 +39,20 @@
       font-size: 22px;
       font-weight: bold;
     }
+    .back-button {
+      margin-top: 30px;
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #0288d1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .back-button:hover {
+      background-color: #0277bd;
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
@@ -58,10 +73,13 @@
     <p>Informe o valor no aplicativo bancário de acordo com a quantidade de números reservados.</p>
   </div>
 
+  <!-- Botão Voltar -->
+  <a href="index.html" class="back-button">Voltar para o Início</a>
+
   <script>
     const urlParams = new URLSearchParams(window.location.search);
-    const quantidade = parseInt(urlParams.get('valor') || '1');
-    const valorTotal = quantidade * 10;
+    const quantidade = parseInt(urlParams.get('valor') || '1'); // pega o valor=quantidade
+    const valorTotal = quantidade * 10; // AGORA CORRETO: 10 reais por número!
 
     // Atualiza o valor na tela
     document.getElementById('valor').textContent = `Valor a pagar: R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
