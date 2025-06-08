@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Pagamento via Pix</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #e0f7fa;
+      color: #03396c;
+      text-align: center;
+    }
+    #qrcode {
+      margin: 20px;
+    }
+    .pix-key {
+      font-size: 20px;
+      background: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-top: 10px;
+      word-break: break-word;
+    }
+    .instructions {
+      margin-top: 20px;
+      font-size: 18px;
+      max-width: 300px;
+    }
+    .valor {
+      margin-top: 10px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+  <h1>Finalize sua compra</h1>
+  <div id="qrcode"></div>
+
+  <div class="valor" id="valor"></div>
+
+  <div class="pix-key">
+    <strong>Chave Pix:</strong><br>
+    11 99542-2511
+  </div>
+
+  <div class="instructions">
+    <p>Aponte a câmera do seu celular para o QR Code e realize o pagamento via Pix.</p>
+    <p>Informe o valor no aplicativo bancário de acordo com a quantidade de números reservados.</p>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const quantidade = parseInt(urlParams.get('valor') || '1');
+    const valorTotal = quantidade * 10;
+
+    // Atualiza o valor na tela
+    document.getElementById('valor').textContent = `Valor a pagar: R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
+
+    // Sua chave Pix
+    const chavePix = '11995422511';
+
+    // Gera o QR Code só da chave Pix
+    new QRCode(document.getElementById('qrcode'), {
+      text: chavePix,
+      width: 256,
+      height: 256
+    });
+  </script>
+
+</body>
+</html>

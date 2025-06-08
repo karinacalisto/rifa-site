@@ -143,18 +143,19 @@
     </div>
   </div>
 
+  <!-- QR Code Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
     const numberContainer = document.getElementById('numbers');
 
     fetch('https://script.google.com/macros/s/AKfycbwbwApMqWf2VTRxI6x-CFiBVQNOUt9skpXI4pui6uugzzfl6DZoXLrlYuQ-jyxUpeMj/exec')
       .then(response => response.json())
       .then(vendidos => {
-        // 🚨 Converte os vendidos para números SEM zeros na frente
         const vendidosNumeros = vendidos.map(v => parseInt(v, 10));
 
-        for (let i = 1; i <= 999; i++) {
-          const num = i.toString().padStart(4, '0'); // Formata com 4 dígitos
-          const numeroSemZero = parseInt(num, 10); // Remove zeros da frente
+        for (let i = 1; i <= 9999; i++) {
+          const num = i.toString().padStart(4, '0');
+          const numeroSemZero = parseInt(num, 10);
 
           const label = document.createElement('label');
           const isVendido = vendidosNumeros.includes(numeroSemZero);
@@ -184,7 +185,9 @@
       formData.append('email', form.email.value);
 
       const checkboxes = document.querySelectorAll('input[name="numeros"]:checked');
+      let quantidadeNumeros = 0;
       checkboxes.forEach(cb => {
+        quantidadeNumeros++;
         const numeroFormatado = cb.value.padStart(4, '0');
         formData.append('numeros', numeroFormatado);
       });
@@ -194,8 +197,10 @@
         body: formData
       }).then(response => {
         if (response.ok) {
-          alert('Sucesso! Sua escolha foi registrada.');
-          form.reset();
+          // Calcula o valor
+          const valor = quantidadeNumeros * 10;
+          // Redireciona para a página de pagamento com o valor na URL
+          window.location.href = `pix.html?valor=${valor}`;
         } else {
           alert('Erro ao enviar. Tente novamente.');
         }
