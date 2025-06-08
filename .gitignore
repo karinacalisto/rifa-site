@@ -1,0 +1,20 @@
+# Ignore node_modules (se usar algum gerenciador de pacotes depois)
+node_modules/
+
+# Ignore arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# Ignore logs
+*.log
+
+# Ignore pastas temporárias
+tmp/
+temp/
+
+# Ignore arquivos de build (caso no futuro use ferramentas tipo Webpack, Vite)
+dist/
+build/
+
+# VSCode settings
+.vscode/

@@ -62,7 +62,7 @@
       const data = Object.fromEntries(formData.entries());
       data.numeros = formData.getAll('numeros');
       
-      fetch('URL_DO_SEU_WEB_APP', {
+      fetch('https://script.google.com/macros/s/AKfycbyWNaMC-hir13Z8LYtjMa36ANA4Nc9JBCcl_-jJ3R4H5I4w2byt8zY_PWyiH7JNzPv0/exec', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
