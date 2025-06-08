@@ -41,7 +41,7 @@
     const numberContainer = document.getElementById('numbers');
 
     // Primeiro, busca os números já vendidos
-    fetch('https://script.google.com/macros/s/AKfycbya6lhw0mkbLpHHsipgaItB8RzoDgq0cnbHlKmDLmm6TSnNrpjpokkZQ1nerI1y5c_j/exec') // URL do seu Web App para o GET
+    fetch('https://script.google.com/macros/s/AKfycbxBqzg3ty2RHc37h6XZj4AFYgqIOUGBXvzF7IGuCV2GJtedvl9KZizjOOYSDd3dIvv7/exec') // URL do seu Web App para o GET
       .then(response => response.json())
       .then(vendidos => {
         for (let i = 1; i <= 999; i++) {
@@ -59,7 +59,7 @@
       e.preventDefault();
       const formData = new FormData(form);
 
-      fetch('https://script.google.com/macros/s/AKfycbya6lhw0mkbLpHHsipgaItB8RzoDgq0cnbHlKmDLmm6TSnNrpjpokkZQ1nerI1y5c_j/exec', {
+      fetch('https://script.google.com/macros/s/AKfycbxBqzg3ty2RHc37h6XZj4AFYgqIOUGBXvzF7IGuCV2GJtedvl9KZizjOOYSDd3dIvv7/exec', {
         method: 'POST',
         body: formData // <-- Importante: FormData sem header
       }).then(response => {
