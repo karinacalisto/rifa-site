@@ -13,7 +13,7 @@
     .banner {
       width: 100%;
       height: 250px;
-	  background-image: url('./banner-ile-ase.png');
+      background-image: url('./banner-ile-ase.png');
       background-size: cover;
       background-position: center;
     }
@@ -166,15 +166,25 @@
         }
       });
 
-    // Script de envio (POST) — Atualizado para evitar CORS
+    // Script de envio (POST) corrigido para enviar JSON e preservar os zeros
     const form = document.getElementById('rifaForm');
     form.addEventListener('submit', function(e) {
       e.preventDefault();
+
       const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      data.numeros = formData.getAll('numeros');
+
+      // Forçar padStart nos números
+      const numerosCorrigidos = data.numeros.map(num => num.padStart(4, '0'));
+      data.numeros = numerosCorrigidos;
 
       fetch('https://script.google.com/macros/s/AKfycbwbwApMqWf2VTRxI6x-CFiBVQNOUt9skpXI4pui6uugzzfl6DZoXLrlYuQ-jyxUpeMj/exec', {
         method: 'POST',
-        body: formData
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }).then(response => {
         if (response.ok) {
           alert('Sucesso! Sua escolha foi registrada.');
