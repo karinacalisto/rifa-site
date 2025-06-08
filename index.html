@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -54,20 +53,15 @@
         }
       });
 
-    // Script de envio (POST)
+    // Script de envio (POST) — Atualizado para evitar CORS
     const form = document.getElementById('rifaForm');
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
-      data.numeros = formData.getAll('numeros');
-      
+
       fetch('https://script.google.com/macros/s/AKfycbya6lhw0mkbLpHHsipgaItB8RzoDgq0cnbHlKmDLmm6TSnNrpjpokkZQ1nerI1y5c_j/exec', {
         method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        body: formData // <-- Importante: FormData sem header
       }).then(response => {
         if (response.ok) {
           alert('Sucesso! Sua escolha foi registrada.');
