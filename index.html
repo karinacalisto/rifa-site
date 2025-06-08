@@ -139,7 +139,7 @@
     </form>
 
     <div class="pix-info">
-      <p>Chave Pix para pagamento: <strong>[EM BREVE]</strong></p>
+      <p>Chave Pix para pagamento: <strong>[INFORMADO NA RESERVA]</strong></p>
     </div>
   </div>
 
@@ -153,7 +153,7 @@
       .then(vendidos => {
         const vendidosNumeros = vendidos.map(v => parseInt(v, 10));
 
-        for (let i = 1; i <= 9999; i++) {
+        for (let i = 1; i <= 999; i++) {
           const num = i.toString().padStart(4, '0');
           const numeroSemZero = parseInt(num, 10);
 
