@@ -2,20 +2,109 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Rifa Solidária</title>
+  <title>Rifa Solidária - Ilê Asé Omo Yemonjá iyà Oyá</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
-    .container { max-width: 700px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    .number-grid { display: flex; flex-wrap: wrap; max-width: 600px; margin-top: 10px; }
-    .number-grid label { width: 60px; margin: 5px; text-align: center; font-size: 14px; }
-    .form-group { margin-bottom: 15px; }
-    button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
-    h1 { text-align: center; }
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      background-color: #e0f7fa; /* Azul bem leve de fundo */
+      color: #03396c; /* Azul escuro bonito */
+    }
+    .banner {
+      width: 100%;
+      height: 250px;
+      background-image: url('URL_DO_SEU_BANNER_AQUI'); /* <-- depois você coloca */
+      background-size: cover;
+      background-position: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      margin-top: -50px;
+      position: relative;
+      z-index: 2;
+    }
+    h1, h2, p {
+      text-align: center;
+    }
+    .info {
+      background-color: #b3e5fc;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 18px;
+    }
+    .number-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .number-grid label {
+      width: 60px;
+      height: 60px;
+      background-color: #ffffff;
+      border: 2px solid #0288d1;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    .number-grid label input {
+      display: none;
+    }
+    .number-grid label.disabled {
+      background-color: #ccc;
+      color: #666;
+      border-color: #aaa;
+      cursor: not-allowed;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    button {
+      width: 100%;
+      padding: 15px;
+      font-size: 18px;
+      background-color: #0288d1;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0277bd;
+    }
+    .pix-info {
+      text-align: center;
+      margin-top: 20px;
+      font-style: italic;
+      color: #555;
+    }
   </style>
 </head>
 <body>
+
+  <div class="banner"></div>
+
   <div class="container">
-    <h1>Escolha seus números da sorte!</h1>
+    <h1>Rifa Solidária</h1>
+    <h2>Ilê Asé Omo Yemonjá iyà Oyá</h2>
+    <div class="info">
+      <p><strong>Prêmio:</strong> R$ 1.000,00</p>
+      <p>O sorteio será realizado quando todos os números forem vendidos.</p>
+      <p>Informaremos a data via WhatsApp.</p>
+    </div>
+
     <form id="rifaForm">
       <div class="form-group">
         <label>Nome Completo:</label><br>
@@ -29,26 +118,34 @@
         <label>Email:</label><br>
         <input type="email" name="email" required>
       </div>
-      <div class="form-group">
-        <label>Escolha seus números:</label>
-        <div class="number-grid" id="numbers"></div>
-      </div>
-      <button type="submit">Enviar</button>
+
+      <h3>Escolha seus números:</h3>
+      <div class="number-grid" id="numbers"></div>
+
+      <button type="submit">Reservar Números</button>
     </form>
+
+    <div class="pix-info">
+      <p>Chave Pix para pagamento: <strong>[EM BREVE]</strong></p>
+    </div>
   </div>
 
   <script>
     const numberContainer = document.getElementById('numbers');
 
     // Primeiro, busca os números já vendidos
-    fetch('https://script.google.com/macros/s/AKfycbwbwApMqWf2VTRxI6x-CFiBVQNOUt9skpXI4pui6uugzzfl6DZoXLrlYuQ-jyxUpeMj/exec') // URL do seu Web App para o GET
+    fetch('https://script.google.com/macros/s/AKfycbya6lhw0mkbLpHHsipgaItB8RzoDgq0cnbHlKmDLmm6TSnNrpjpokkZQ1nerI1y5c_j/exec')
       .then(response => response.json())
       .then(vendidos => {
         for (let i = 1; i <= 999; i++) {
           const num = i.toString().padStart(4, '0');
           const label = document.createElement('label');
           const isVendido = vendidos.includes(num);
-          label.innerHTML = `<input type="checkbox" name="numeros" value="${num}" ${isVendido ? 'disabled' : ''}> ${num}`;
+          label.innerHTML = `<input type="checkbox" name="numeros" value="${num}"> ${num}`;
+          if (isVendido) {
+            label.classList.add('disabled');
+            label.querySelector('input').disabled = true;
+          }
           numberContainer.appendChild(label);
         }
       });
@@ -59,9 +156,9 @@
       e.preventDefault();
       const formData = new FormData(form);
 
-      fetch('https://script.google.com/macros/s/AKfycbwbwApMqWf2VTRxI6x-CFiBVQNOUt9skpXI4pui6uugzzfl6DZoXLrlYuQ-jyxUpeMj/exec', {
+      fetch('https://script.google.com/macros/s/AKfycbya6lhw0mkbLpHHsipgaItB8RzoDgq0cnbHlKmDLmm6TSnNrpjpokkZQ1nerI1y5c_j/exec', {
         method: 'POST',
-        body: formData // <-- Importante: FormData sem header
+        body: formData
       }).then(response => {
         if (response.ok) {
           alert('Sucesso! Sua escolha foi registrada.');
@@ -72,5 +169,6 @@
       });
     });
   </script>
+
 </body>
 </html>
