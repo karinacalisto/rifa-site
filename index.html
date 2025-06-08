@@ -184,11 +184,13 @@
       formData.append('telefone', form.telefone.value);
       formData.append('email', form.email.value);
 
+      const numerosSelecionados = [];
       const checkboxes = document.querySelectorAll('input[name="numeros"]:checked');
       let quantidadeNumeros = 0;
       checkboxes.forEach(cb => {
         quantidadeNumeros++;
         const numeroFormatado = cb.value.padStart(4, '0');
+        numerosSelecionados.push(numeroFormatado);
         formData.append('numeros', numeroFormatado);
       });
 
@@ -197,9 +199,13 @@
         body: formData
       }).then(response => {
         if (response.ok) {
-          // Calcula o valor
+          // Guarda informações no localStorage
+          localStorage.setItem('nome', form.nome.value);
+          localStorage.setItem('telefone', form.telefone.value);
+          localStorage.setItem('email', form.email.value);
+          localStorage.setItem('numeros', JSON.stringify(numerosSelecionados));
+
           const valor = quantidadeNumeros * 10;
-          // Redireciona para a página de pagamento com o valor na URL
           window.location.href = `pix.html?valor=${valor}`;
         } else {
           alert('Erro ao enviar. Tente novamente.');

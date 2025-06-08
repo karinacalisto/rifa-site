@@ -39,6 +39,16 @@
       font-size: 22px;
       font-weight: bold;
     }
+    .purchase-summary {
+      margin-top: 20px;
+      font-size: 18px;
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+      text-align: left;
+    }
     .back-button {
       margin-top: 30px;
       padding: 15px 30px;
@@ -73,26 +83,40 @@
     <p>Informe o valor no aplicativo bancário de acordo com a quantidade de números reservados.</p>
   </div>
 
+  <div class="purchase-summary" id="purchase-summary"></div>
+
   <!-- Botão Voltar -->
   <a href="index.html" class="back-button">Voltar para o Início</a>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
-    const quantidade = parseInt(urlParams.get('valor') || '1'); // pega o valor=quantidade
-    const valorTotal = quantidade * 10; // AGORA CORRETO: 10 reais por número!
+    const valorRecebido = parseFloat(urlParams.get('valor') || '10'); // valor já está certo
 
-    // Atualiza o valor na tela
-    document.getElementById('valor').textContent = `Valor a pagar: R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
+    document.getElementById('valor').textContent = `Valor a pagar: R$ ${valorRecebido.toFixed(2).replace('.', ',')}`;
 
-    // Sua chave Pix
     const chavePix = '11995422511';
 
-    // Gera o QR Code só da chave Pix
     new QRCode(document.getElementById('qrcode'), {
       text: chavePix,
       width: 256,
       height: 256
     });
+
+    const nome = localStorage.getItem('nome');
+    const telefone = localStorage.getItem('telefone');
+    const email = localStorage.getItem('email');
+    const numeros = JSON.parse(localStorage.getItem('numeros'));
+
+    const resumoDiv = document.getElementById('purchase-summary');
+    if (nome && telefone && email && numeros) {
+      resumoDiv.innerHTML = `
+        <h2>Resumo da Compra</h2>
+        <p><strong>Nome:</strong> ${nome}</p>
+        <p><strong>Telefone:</strong> ${telefone}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Números Reservados:</strong> ${numeros.join(', ')}</p>
+      `;
+    }
   </script>
 
 </body>
