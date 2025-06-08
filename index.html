@@ -7,13 +7,13 @@
     body {
       font-family: 'Arial', sans-serif;
       margin: 0;
-      background-color: #e0f7fa; /* Azul bem leve de fundo */
-      color: #03396c; /* Azul escuro bonito */
+      background-color: #e0f7fa; /* Azul bem leve */
+      color: #03396c; /* Azul escuro */
     }
     .banner {
       width: 100%;
       height: 250px;
-      background-image: url('URL_DO_SEU_BANNER_AQUI'); /* <-- depois você coloca */
+	  background-image: url('./banner-ile-ase.png');
       background-size: cover;
       background-position: center;
     }
@@ -48,7 +48,6 @@
     .number-grid label {
       width: 60px;
       height: 60px;
-      background-color: #ffffff;
       border: 2px solid #0288d1;
       border-radius: 8px;
       display: flex;
@@ -57,10 +56,24 @@
       cursor: pointer;
       font-weight: bold;
       font-size: 16px;
-      transition: background 0.3s;
+      transition: all 0.3s;
+      position: relative;
     }
     .number-grid label input {
       display: none;
+    }
+    .number-grid label span {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+    .number-grid label input:checked + span {
+      background-color: #0288d1;
+      color: white;
+      border: 2px solid #01579b;
     }
     .number-grid label.disabled {
       background-color: #ccc;
@@ -141,7 +154,10 @@
           const num = i.toString().padStart(4, '0');
           const label = document.createElement('label');
           const isVendido = vendidos.includes(num);
-          label.innerHTML = `<input type="checkbox" name="numeros" value="${num}"> ${num}`;
+          label.innerHTML = `
+            <input type="checkbox" name="numeros" value="${num}" id="num${num}">
+            <span>${num}</span>
+          `;
           if (isVendido) {
             label.classList.add('disabled');
             label.querySelector('input').disabled = true;
