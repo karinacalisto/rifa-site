@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Rifa Solidária - Boa Vista</title>
+  <title>Rifa Solidária - Comunidade do Bem</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -13,7 +13,7 @@
     .banner {
       width: 100%;
       height: 250px;
-      background-image: url('./banner-ile-ase.png');
+      background-image: url('./banner-solidario.png');
       background-size: cover;
       background-position: center;
     }
@@ -84,6 +84,15 @@
     .form-group {
       margin-bottom: 20px;
     }
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
     button {
       width: 100%;
       padding: 15px;
@@ -103,6 +112,40 @@
       font-style: italic;
       color: #555;
     }
+
+    @media (max-width: 600px) {
+      .number-grid label {
+        width: 45px;
+        height: 45px;
+        font-size: 14px;
+      }
+
+      .container {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      button {
+        font-size: 16px;
+        padding: 12px;
+      }
+
+      input[type="text"],
+      input[type="email"] {
+        font-size: 14px;
+      }
+
+      .banner {
+        height: 150px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -114,7 +157,7 @@
     <h2>Ajude a Comunidade a Crescer!</h2>
 
     <p style="text-align: center; font-size: 20px; margin: 20px 0; color: #0277bd;">
-      Cada número comprado é um passo para fortalecer a nossa comunidade - Faremos uma nova cozinha com este valor para ajudar os necessitados.
+      Cada número comprado é um passo para fortalecer a nossa comunidade.
     </p>
 
     <div class="info">
@@ -204,7 +247,6 @@
         body: formData
       }).then(response => {
         if (response.ok) {
-          // Guarda informações no localStorage
           localStorage.setItem('nome', form.nome.value);
           localStorage.setItem('telefone', form.telefone.value);
           localStorage.setItem('email', form.email.value);
